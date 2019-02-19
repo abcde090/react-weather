@@ -18,6 +18,7 @@ class App extends Component {
         <WeatherChannelRedux />
         <Footer />
       </div>
+      
       </Provider>
     );
   }

@@ -15,7 +15,9 @@ class Toolbar extends React.Component {
           <button className="search-btn"><i className="fa fa-search"></i></button>
 
           <button className="temp-switch" onClick={
-            () => unit === 'C'?switchTempUnit('F') : switchTempUnit('C')}>
+            () => {
+                return unit === 'C' ? switchTempUnit('F') : switchTempUnit('C');
+            }}>
             <i
               className="fa fa-thermometer-empty"
               aria-hidden="true"
@@ -31,13 +33,22 @@ class Toolbar extends React.Component {
 
 // inject fn to dispatch action to update store state
 const mapDispatchToProps = dispatch => ({
-    switchTempUnit: (unit) => dispatch({
+    switchTempUnit: 
+    (unit) => dispatch({
       type: CHANGE_TEMP_UNIT,
       tempUnit: unit
   }) 
 })
+
+const mapStateToProps = (state) => {
+    return {
+      unit: state.options.tempUnit
+};
+};
+
+
   //
 export default connect(
-  null,
+  mapStateToProps,
    mapDispatchToProps
   )(Toolbar);

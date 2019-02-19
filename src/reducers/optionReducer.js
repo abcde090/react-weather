@@ -5,7 +5,7 @@ import {
 
 const initialState = {
     curCity: "Brisbane",
-    tempUnit: "F"
+    tempUnit: "C"
 };
 
 const optionsReducer = (state = initialState, action) => {

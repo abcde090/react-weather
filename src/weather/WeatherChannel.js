@@ -33,6 +33,7 @@ export default class WeatherChannel extends React.Component {
     }
 
     switchTemp () {
+        console.log(this.state);
         if (this.state.unit === 'C') {
             this.setState({unit:'F'});
         } else {
