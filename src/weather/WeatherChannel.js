@@ -3,6 +3,8 @@ import CityCondition from './CityCondition';
 import Forecast from './Forecast';
 import Nav from './Nav';
 
+import {fetchCurrent, fetchForecast} from '../api/weather';
+
 
 export default class WeatherChannel extends React.Component {
     constructor(props) {
@@ -26,10 +28,20 @@ export default class WeatherChannel extends React.Component {
                 day:'Fri', time:'19:00', high:{C:46, F:92}, low:{C:28, F:81}
               }
             ],
-            unit:'F',
-            curCity:""
+            unit:'C',
+            curCity:"Melbourne"
         };
 
+    }
+
+    componentDidMount() {
+        fetchCurrent(this.state.curCity).then(data => {
+            this.setState({condition: data});
+        })
+
+       /*  fetchForecast(this.state.curCity).then(data => {
+            this.setState({forecast: data});
+        }) */
     }
 
     switchTemp () {
@@ -40,12 +52,28 @@ export default class WeatherChannel extends React.Component {
             this.setState({unit:'C'});
         }
     }
+
+    changeCity(event) {
+        console.log(event.target.value);
+        this.setState({curCity: event.target.value});
+    }
+
+    search() {
+        fetchCurrent(this.state.curCity).then(data => {
+            this.setState({condition: data});
+        })
+    }
 // here change all states 
-    render() {
-        const {condition, forecast, unit} = this.state;
+    render() { 
+        const {condition, forecast, unit, curCity} = this.state;
         return (
             <React.Fragment>
-            <Nav unit = {unit} switchTemp = {() => {this.switchTemp()}} />
+            <Nav curCity = {curCity} 
+            changeCity = {
+            event => this.changeCity(event)} 
+            unit = {unit} 
+            switchTemp = {() => {this.switchTemp()}} 
+            search = {() => this.search()} />
             <main>
             <CityCondition data={condition} unit = {unit} />
             <Forecast data={forecast} unit = {unit} />

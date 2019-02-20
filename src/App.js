@@ -15,7 +15,7 @@ class App extends Component {
       <Provider store={store}>
       <div className="weather-channel__container">
         <Header />
-        <WeatherChannelRedux />
+        <WeatherChannel />
         <Footer />
       </div>
       

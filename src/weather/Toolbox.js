@@ -1,11 +1,11 @@
 import React from 'react';
 
 export default function Toolbox(props) {
-  const {unit, switchTemp} = props;
+  const {unit, switchTemp, curCity, changeCity} = props;
     return (
         <nav>
         <div style={{flex:1}}>
-          <input className="search-input" />
+          <input className="search-input" value={curCity} onChange={changeCity}/>
           <button className="search-btn"><i className="fa fa-search"></i></button>
 
           <button className="temp-switch" onClick={
