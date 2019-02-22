@@ -11,41 +11,33 @@ export default class WeatherChannel extends React.Component {
         super(props);
         this.state = {
             condition: {
-                city: 'Brisbane, Au',
-                humidity: 62,
-                windSpeed: '9',
-                windDirection: 'NS',
-                temp: {C:26, F:72}
+                city: '',
+                humidity: '',
+                windSpeed: '',
+                windDirection: '',
+                temp: {C:'', F:''}
               },
               forecast:
               [{
-                day:'Fri', time:'13:00', high:{C:26, F:72}, low:{C:20, F:61}
+                day:'', time:'', high:{C:'', F:''}, low:{C:'', F:''}
               }, 
               {
-                day:'Fri', time:'16:00', high:{C:36, F:82}, low:{C:24, F:71}
+                day:'', time:'', high:{C:'', F:''}, low:{C:'', F:''}
               },
               {
-                day:'Fri', time:'19:00', high:{C:46, F:92}, low:{C:28, F:81}
+                day:'', time:'', high:{C:'', F:''}, low:{C:'', F:''}
               }
             ],
             unit:'C',
-            curCity:"Melbourne"
+            curCity:"Enter city name"
         };
 
     }
 
-    componentDidMount() {
-        fetchCurrent(this.state.curCity).then(data => {
-            this.setState({condition: data});
-        })
-
-       /*  fetchForecast(this.state.curCity).then(data => {
-            this.setState({forecast: data});
-        }) */
-    }
-
+    
+   
     switchTemp () {
-        console.log(this.state);
+
         if (this.state.unit === 'C') {
             this.setState({unit:'F'});
         } else {
@@ -54,7 +46,7 @@ export default class WeatherChannel extends React.Component {
     }
 
     changeCity(event) {
-        console.log(event.target.value);
+
         this.setState({curCity: event.target.value});
     }
 
@@ -62,7 +54,10 @@ export default class WeatherChannel extends React.Component {
         fetchCurrent(this.state.curCity).then(data => {
             this.setState({condition: data});
         })
-    }
+        fetchForecast(this.state.curCity).then(data => {
+            this.setState({forecast: data});
+        })  
+}
 // here change all states 
     render() { 
         const {condition, forecast, unit, curCity} = this.state;

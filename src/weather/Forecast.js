@@ -45,7 +45,7 @@ export default function Forecast(props) {
           </span>
           <span className="weather-forecast__high">{data[2].high[unit]}</span>
           <span className="weather-forecast__low">{data[2].low[unit]}</span>
-        </div>
+        </div> 
       </section>
     );
 }

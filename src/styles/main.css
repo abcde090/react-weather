@@ -169,7 +169,6 @@ button.forecast__switch_1 {
 }
 .weather-forecast__day {
   flex: 0.1;
-  text-transform: uppercase;
 }
 .weather-forecast__icon {
   flex: 0.2;
