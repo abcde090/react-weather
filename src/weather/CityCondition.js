@@ -3,11 +3,6 @@ import umbrella from '../images/icon-umberella.png';
 import wind from '../images/icon-wind.png';
 import compass from '../images/icon-compass.png';
 
-const Style = {
-    textAlign: "center",
-    fontSize: "14px"
-}
-
 /**
  * 
  * @param {*} props 

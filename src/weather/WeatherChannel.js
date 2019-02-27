@@ -3,6 +3,8 @@ import CityCondition from './CityCondition';
 import Forecast from './Forecast';
 import Nav from './Nav';
 
+import {fetchCurrent, fetchForecast} from '../api/weather';
+
 
 export default class WeatherChannel extends React.Component {
     constructor(props) {
@@ -10,44 +12,99 @@ export default class WeatherChannel extends React.Component {
         this.state = {
             condition: {
                 city: 'Brisbane, Au',
-                humidity: 62,
-                windSpeed: '9',
-                windDirection: 'NS',
-                temp: {C:26, F:72}
+                humidity: '',
+                windSpeed: '',
+                windDirection: 'N',
+                temp: {C:"N/A", F:"N/A"}
               },
               forecast:
               [{
-                day:'Fri', time:'13:00', high:{C:26, F:72}, low:{C:20, F:61}
+                day:'', time:'', high:{C:'', F:''}, low:{C:'', F:''}
               }, 
               {
-                day:'Fri', time:'16:00', high:{C:36, F:82}, low:{C:24, F:71}
+                day:'', time:'', high:{C:'', F:''}, low:{C:'', F:''}
               },
               {
-                day:'Fri', time:'19:00', high:{C:46, F:92}, low:{C:28, F:81}
+                day:'', time:'', high:{C:'', F:''}, low:{C:'', F:''}
+              },
+              {
+                day:'', time:'', high:{C:'', F:''}, low:{C:'', F:''}
+              },
+              {
+                day:'', time:'', high:{C:'', F:''}, low:{C:'', F:''}
               }
             ],
-            unit:'F',
-            curCity:""
+            unit:'C',
+            item: 5,
+            curCountry:"country code",
+            curCity:"city name",
+            button1: " switch-active",
+            button2: " "
         };
 
     }
+    
+    componentDidMount() {
+        fetchCurrent(this.state.curCity, this.state.curCountry).then(data => {
+            this.setState({condition: data});
+        }) 
+    }
 
     switchTemp () {
+
         if (this.state.unit === 'C') {
             this.setState({unit:'F'});
         } else {
             this.setState({unit:'C'});
         }
     }
+
+    changeNumItem1() {
+      this.setState({item:10, button2:" switch-active", button1:" "});
+    }
+        
+
+    changeNumItem2() {
+        this.setState({item:5, button2: " ", button1:" switch-active"});
+    }
+
+    changeCity(event) {
+
+        this.setState({curCity: event.target.value});
+    }
+
+    changeCurrentCountry(event) {
+        this.setState({curCountry: event.target.value});
+    }
+
+    search() {
+
+        fetchForecast(this.state.curCity, this.state.curCountry).then(data => {
+            this.setState({forecast: data});
+        }) 
+        fetchCurrent(this.state.curCity, this.state.curCountry).then(data => {
+            this.setState({condition: data});
+        }) 
+    
+}
 // here change all states 
-    render() {
-        const {condition, forecast, unit} = this.state;
+    render() { 
+        const {condition, forecast, unit, item, curCity, curCountry, button1, button2} = this.state;
         return (
             <React.Fragment>
-            <Nav unit = {unit} switchTemp = {() => {this.switchTemp()}} />
+            <Nav curCity = {curCity} curCountry = {curCountry}
+            changeCity = {
+            event => this.changeCity(event)} 
+            changeCountry = {event => this.changeCurrentCountry(event)}
+            unit = {unit} 
+            switchTemp = {() => {this.switchTemp()}} 
+            search = {() => this.search()} />
             <main>
             <CityCondition data={condition} unit = {unit} />
-            <Forecast data={forecast} unit = {unit} />
+            <Forecast data={forecast} unit = {unit} item = {item} 
+            changeNumItem1 = {() => this.changeNumItem1()} 
+            changeNumItem2 = {() => this.changeNumItem2()}
+            button1 = {button1} button2 = {button2} />
             </main>
             </React.Fragment>
         )

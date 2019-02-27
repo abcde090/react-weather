@@ -1,13 +1,15 @@
 import React from 'react';
 
 export default function Nav(props) {
-  const {unit, switchTemp} = props;
+  const {unit, switchTemp, curCity, changeCity, search, curCountry, changeCountry} = props;
     return (
         <nav>
-        <div style={{flex:1}}>
-          <input className="search-input" />
-          <button className="search-btn"><i className="fa fa-search"></i></button>
-
+        <div style={{flex:2}}>
+        <input className="search-input country-code" value={curCountry} onChange={changeCountry}/>
+        <input className="search-input" value={curCity} onChange={changeCity}/>
+          <button className="search-btn" onClick={search}><i className="fa fa-search"></i></button>
+    
+      
           <button className="temp-switch" onClick={switchTemp}>
             <i
               className="fa fa-thermometer-empty"
