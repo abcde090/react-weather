@@ -15,8 +15,8 @@ export function fetchCurrent(city, country = 'au') {
       humidity: current.humidity,
       windSpeed: current.windSpeed,
       temp: {
-        C: current.maxCelsius,
-        F: current.maxFahrenheit
+        C: current.maxCelsius.toFixed(0),
+        F: current.maxFahrenheit.toFixed(1)
       }
     };
   });
@@ -53,7 +53,7 @@ const dateConversion = (date) => {
   return {day: days, time: formattedTime};
 }
 
-const weatherForecasts = [];
+
 
 export function fetchForecast(city, country = 'au') {
   return axios.get(`${API_BASE_URL}/${country}/${city}`, {
@@ -61,6 +61,7 @@ export function fetchForecast(city, country = 'au') {
       weather: 'forecast'
     }
   }).then(response => {
+      const weatherForecasts = [];
       const forecast = response.data.data.forecast;
       forecast.forEach(element => {
         let weatherForecast = {
