@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_BASE_URL = 'https://dan-weather-api.herokuapp.com/api/weather';
-export function fetchCurrent(city, country = 'au') {
+export function fetchCurrent(city, country) {
   return axios.get(`${API_BASE_URL}/${country}/${city}`, {
     params: {
       weather: 'current'
@@ -55,7 +55,7 @@ const dateConversion = (date) => {
 
 
 
-export function fetchForecast(city, country = 'au') {
+export function fetchForecast(city, country) {
   return axios.get(`${API_BASE_URL}/${country}/${city}`, {
     params: {
       weather: 'forecast'

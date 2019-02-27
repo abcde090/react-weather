@@ -72,6 +72,8 @@ nav {
   padding: 0.8rem 0 0.8rem 1rem;
   display: flex;
 }
+
+
 .search-input {
   font-size: 100%;
   border-radius: 30px;
@@ -79,6 +81,11 @@ nav {
   color: #fff;
   padding: 0.5rem 1rem;
   width: 180px;
+  margin-left: 10px;
+}
+
+.country-code {
+  width: 150px;
 }
 .search-btn {
   border: none;

@@ -12,10 +12,10 @@ export default class WeatherChannel extends React.Component {
         this.state = {
             condition: {
                 city: 'Brisbane, Au',
-                humidity: 62,
-                windSpeed: '9',
-                windDirection: 'NS',
-                temp: {C:26, F:72}
+                humidity: '',
+                windSpeed: '',
+                windDirection: 'N',
+                temp: {C:"N/A", F:"N/A"}
               },
               forecast:
               [{
@@ -36,7 +36,8 @@ export default class WeatherChannel extends React.Component {
             ],
             unit:'C',
             item: 5,
-            curCity:"Brisbane",
+            curCountry:"country code",
+            curCity:"city name",
             button1: " switch-active",
             button2: " "
         };
@@ -44,7 +45,7 @@ export default class WeatherChannel extends React.Component {
     }
     
     componentDidMount() {
-        fetchCurrent(this.state.curCity).then(data => {
+        fetchCurrent(this.state.curCity, this.state.curCountry).then(data => {
             this.setState({condition: data});
         }) 
     }
@@ -72,24 +73,29 @@ export default class WeatherChannel extends React.Component {
         this.setState({curCity: event.target.value});
     }
 
+    changeCurrentCountry(event) {
+        this.setState({curCountry: event.target.value});
+    }
+
     search() {
 
-        fetchForecast(this.state.curCity).then(data => {
+        fetchForecast(this.state.curCity, this.state.curCountry).then(data => {
             this.setState({forecast: data});
         }) 
-        fetchCurrent(this.state.curCity).then(data => {
+        fetchCurrent(this.state.curCity, this.state.curCountry).then(data => {
             this.setState({condition: data});
         }) 
     
 }
 // here change all states 
     render() { 
-        const {condition, forecast, unit, item, curCity, button1, button2} = this.state;
+        const {condition, forecast, unit, item, curCity, curCountry, button1, button2} = this.state;
         return (
             <React.Fragment>
-            <Nav curCity = {curCity} 
+            <Nav curCity = {curCity} curCountry = {curCountry}
             changeCity = {
             event => this.changeCity(event)} 
+            changeCountry = {event => this.changeCurrentCountry(event)}
             unit = {unit} 
             switchTemp = {() => {this.switchTemp()}} 
             search = {() => this.search()} />
